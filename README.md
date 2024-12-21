@@ -1,24 +1,22 @@
-Recipe API Documentation
+# Recipe API Documentation
+
 This API allows users to interact with a recipe and ingredient management system. It includes functionality to get recipes, save favorites, and manage ingredients.
 
-API Endpoints
-1. Chatbot Recipe Suggestions
-Endpoint: POST /chatbot/
+## API Endpoints
+
+### 1. Chatbot Recipe Suggestions Endpoint
+**POST** `/chatbot/`  
 Description: This endpoint allows you to send a prompt to the chatbot, which will provide recipe suggestions based on the prompt.
 
-Request Body:
-
-json
-Copy code
+#### Request Body:
+```json
 {
   "prompt": "want to taste something sweet"
 }
-Response: The chatbot will provide a response with a list of favorite recipes and available recipes based on the provided prompt.
-
-Example Response:
-
+##Response:
+The chatbot will provide a response with a list of favorite recipes and available recipes based on the provided prompt.
 json
-Copy code
+
 {
   "suggestions": {
     "favorites": ["Chocolate Cake", "Cookies"],
@@ -26,16 +24,15 @@ Copy code
   },
   "botReply": "Here are some sweet recipes you can try: Chocolate Cake, Cookies."
 }
-2. Get All Favorite Recipes
-Endpoint: GET /recipes/
+### 2. Get All Favorite Recipes Endpoint
+GET /recipes/
 Description: This endpoint allows you to get all the favorite recipes stored in the system.
 
-Response: Returns a list of all favorite recipes.
-
-Example Response:
+Response:
+Returns a list of all favorite recipes.
 
 json
-Copy code
+
 [
   {
     "title": "Chocolate Cake",
@@ -56,14 +53,13 @@ Copy code
     "image": "url-to-image"
   }
 ]
-3. Save Recipe to Favorites
-Endpoint: POST /recipes/
+### 3. Save Recipe to Favorites Endpoint
+POST /recipes/
 Description: This endpoint allows you to add a new recipe to the favorites list.
 
 Request Body:
-
 json
-Copy code
+
 {
   "title": "Tomato Soup",
   "ingredients": [
@@ -73,12 +69,11 @@ Copy code
   "instructions": "Boil the tomatoes and onions, then blend them together.",
   "image": ""
 }
-Response: Returns the recipe that was added to the favorites.
-
-Example Response:
+Response:
+Returns the recipe that was added to the favorites.
 
 json
-Copy code
+
 {
   "title": "Tomato Soup",
   "ingredients": [
@@ -88,71 +83,58 @@ Copy code
   "instructions": "Boil the tomatoes and onions, then blend them together.",
   "image": ""
 }
-4. Add Ingredient
-Endpoint: POST /ingredients/
+### 4. Add Ingredient Endpoint
+POST /ingredients/
 Description: This endpoint allows you to add a new ingredient to the database.
 
 Request Body:
-
 json
-Copy code
+
 {
   "name": "Chocolate Chips",
   "quantity": 100,
   "unit": "grams"
 }
-Response: Returns the ingredient that was added.
-
-Example Response:
+Response:
+Returns the ingredient that was added.
 
 json
-Copy code
+
 {
   "name": "Chocolate Chips",
   "quantity": 100,
   "unit": "grams"
 }
-5. Get All Ingredients
-Endpoint: GET /ingredients/
+### 5. Get All Ingredients Endpoint
+GET /ingredients/
 Description: This endpoint allows you to get all ingredients stored in the system.
 
-Response: Returns a list of all ingredients.
-
-Example Response:
+Response:
+Returns a list of all ingredients.
 
 json
-Copy code
+
 [
-  {
-    "name": "Flour",
-    "quantity": 500,
-    "unit": "grams"
-  },
-  {
-    "name": "Sugar",
-    "quantity": 300,
-    "unit": "grams"
-  }
+  { "name": "Flour", "quantity": 500, "unit": "grams" },
+  { "name": "Sugar", "quantity": 300, "unit": "grams" }
 ]
-6. Update Ingredient
-Endpoint: PATCH /ingredients/
+6. Update Ingredient Endpoint
+PATCH /ingredients/
 Description: This endpoint allows you to update an ingredient in the database.
 
 Request Body:
-
 json
-Copy code
+
 {
   "name": "Chocolate Chips",
   "quantity": 200,
   "unit": "grams"
 }
-Response: Returns the updated ingredient.
-
-Example Response:
+Response:
+Returns the updated ingredient.
 
 json
-Copy code
+
 {
   "name": "Chocolate Chips",
   "quantity": 200,
