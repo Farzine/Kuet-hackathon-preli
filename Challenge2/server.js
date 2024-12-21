@@ -14,6 +14,7 @@ const chatbotRoutes = require('./routes/chatbotRoutes');
 
 
 const app = express();
+app.use(express.json());
 const PORT = 5000;
 
 // Routes
