@@ -38,8 +38,6 @@ Image (Base64): ${image}
 
 
 
-
-
 exports.getAllRecipes = (req, res) => {
     fs.readFile(recipesFilePath, 'utf-8', (err, data) => {
         if (err) {
@@ -51,17 +49,25 @@ exports.getAllRecipes = (req, res) => {
 
         recipeBlocks.forEach((block) => {
             const lines = block.split('\n');
-            const title = lines.find((line) => line.startsWith('Title:')).replace('Title: ', '');
-            const ingredientsLine = lines.find((line) => line.startsWith('Ingredients:')).replace('Ingredients: ', '');
-            const instructions = lines.find((line) => line.startsWith('Instructions:')).replace('Instructions: ', '');
-            const image = lines.find((line) => line.startsWith('Image:')).replace('Image: ', '');
+            
+            // Extracting title, ingredients, instructions, and image (with checks for undefined)
+            const title = lines.find((line) => line.startsWith('Title:'))?.replace('Title: ', '') || '';
+            const ingredientsLine = lines.find((line) => line.startsWith('Ingredients:'))?.replace('Ingredients: ', '') || '';
+            const instructions = lines.find((line) => line.startsWith('Instructions:'))?.replace('Instructions: ', '') || '';
+            const image = lines.find((line) => line.startsWith('Image:'))?.replace('Image: ', '') || '';
 
+            // Parsing ingredients into a structured format
             const ingredients = ingredientsLine.split(', ').map((ing) => {
-                const match = ing.match(/(.*) \((\d+) (.*)\)/);
-                return { name: match[1], quantity: parseInt(match[2], 10), unit: match[3] };
-            });
+                const match = ing.match(/(.*) \((\d+) (\w+)\)/); // Matching ingredient format like "Tomato (5 pieces)"
+                if (match) {
+                    return { name: match[1], quantity: parseInt(match[2], 10), unit: match[3] };
+                } else {
+                    return null; // Return null if match fails
+                }
+            }).filter(Boolean); // Remove null entries if any ingredient line didn't match
 
-            recipes.push({ title, ingredients, instructions, image: `/recipe_images/${image}` });
+            // Add recipe to the list
+            recipes.push({ title, ingredients, instructions, image: image ? `/recipe_images/${image}` : '' });
         });
 
         res.json(recipes);
